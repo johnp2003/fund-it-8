@@ -1,0 +1,8 @@
+{
+  "scroll-sepolia": {
+    "CharityCentral": {
+      "address": "0x0928823D8B60D0f442b3a04b946948c2880f8C53",
+      "startBlock": 11389188
+    }
+  }
+}
