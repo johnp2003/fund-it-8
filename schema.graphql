@@ -1,29 +1,71 @@
-type CampaignCreated @entity(immutable: true) {
-  id: Bytes!
-  campaignAddress: Bytes! # address
-  charityAddress: Bytes! # address
-  name: String! # string
-  goal: BigInt! # uint256
-  campaignImageURI: String! # string
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type Charity @entity(immutable: false) {
+  id: ID!
+  address: Bytes!
+  name: String!
+  isVerified: Boolean!
+  campaigns: [Campaign!]! @derivedFrom(field: "charity")
 }
 
-type CharityVerified @entity(immutable: true) {
-  id: Bytes!
-  charityAddress: Bytes! # address
-  name: String! # string
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type Campaign @entity(immutable: false) {
+  id: ID!
+  address: Bytes!
+  charity: Charity!
+  name: String!
+  description: String!
+  goal: BigInt!
+  totalDonated: BigInt!
+  state: String!
+  milestones: [Milestone!]! @derivedFrom(field: "campaign")
+  donations: [Donation!]! @derivedFrom(field: "campaign")
+  donors: [CampaignDonor!]! @derivedFrom(field: "campaign")
+  fundsReleased: [FundRelease!]! @derivedFrom(field: "campaign")
+  topDonors: [CampaignDonor!]
+  createdAt: BigInt!
+  donorsCount: Int!
 }
 
-type OwnershipTransferred @entity(immutable: true) {
-  id: Bytes!
-  previousOwner: Bytes! # address
-  newOwner: Bytes! # address
-  blockNumber: BigInt!
-  blockTimestamp: BigInt!
-  transactionHash: Bytes!
+type Milestone @entity(immutable: false) {
+  id: ID!
+  campaign: Campaign!
+  index: Int!
+  target: BigInt!
+  reached: Boolean!
+  fundsReleased: Boolean!
+  reachedAt: BigInt
+}
+
+type Donor @entity(immutable: false) {
+  id: ID!
+  address: Bytes!
+  totalDonated: BigInt!
+  campaignsDonatedTo: [CampaignDonor!]! @derivedFrom(field: "donor")
+  donations: [Donation!]! @derivedFrom(field: "donor")
+  donationsCount: Int!
+  lastDonationTime: BigInt
+}
+
+type CampaignDonor @entity(immutable: false) {
+  id: ID!
+  campaign: Campaign!
+  donor: Donor!
+  totalDonated: BigInt!
+  isTopDonor: Boolean!
+  rank: Int
+}
+
+type Donation @entity(immutable: false) {
+  id: ID!
+  donor: Donor!
+  campaign: Campaign!
+  amount: BigInt!
+  timestamp: BigInt!
+}
+
+type FundRelease @entity(immutable: false) {
+  id: ID!
+  campaign: Campaign!
+  milestoneIndex: Int!
+  amount: BigInt!
+  recipient: Bytes!
+  timestamp: BigInt!
 }
