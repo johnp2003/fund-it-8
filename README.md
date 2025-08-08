@@ -9,7 +9,7 @@ The Graph is a decentralized protocol for indexing and querying blockchain data.
 **Subgraph URL:**  
 [https://api.studio.thegraph.com/query/105145/fund-it-8/version/latest](https://api.studio.thegraph.com/query/105145/fund-it-8/version/latest)
 
-Use this endpoint to run your GraphQL queries and power your applications!
+Use this endpoint to run the GraphQL queries!
 
 ## 🏗️ Core Entities
 
