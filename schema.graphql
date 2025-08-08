@@ -41,7 +41,7 @@ type Donor @entity(immutable: false) {
   campaignsDonatedTo: [CampaignDonor!]! @derivedFrom(field: "donor")
   donations: [Donation!]! @derivedFrom(field: "donor")
   donationsCount: Int!
-  lastDonationTime: BigInt
+  lastDonationTime: BigInt 
 }
 
 type CampaignDonor @entity(immutable: false) {
